@@ -1,0 +1,43 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* Set DaisyUI to use the 'light' theme by default */
+@plugin "daisyui" {
+  themes: light --default, dark, cupcake;
+}
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  /* Theme colors */
+  --color-primary: #632ee3;
+  --color-secondary: #9f62f2;
+
+  /* Gradient variable */
+  --gradient-primary: linear-gradient(90deg, #632ee3, #9f62f2);
+  --gradient-hover: linear-gradient(90deg, #9f62f2, #632ee3);
+}
+
+/* --- OVERRIDES --- */
+
+/* Make DaisyUI .btn-primary use gradient */
+.btn-primary {
+  background: var(--gradient-primary) !important;
+  border: none !important;
+  color: #fff !important;
+}
+.btn-primary:hover {
+  background: var(--gradient-hover) !important;
+}
+/* Make text-primary display gradient text */
+.text-primary {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+li > a.active {
+  background: linear-gradient(90deg, #632ee3, #9f62f2);
+  color: white;
+}
