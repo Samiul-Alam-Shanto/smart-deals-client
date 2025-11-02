@@ -73,7 +73,7 @@ const Register = () => {
                 placeholder="Password"
               />
 
-              <button className="btn btn-primary mt-4">Sign In</button>
+              <button className="btn btn-primary mt-4">Sign Up</button>
             </fieldset>
           </form>
           <div className=" pb-8  text-center">

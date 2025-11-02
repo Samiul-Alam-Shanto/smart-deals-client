@@ -15,7 +15,6 @@
 
   /* Gradient variable */
   --gradient-primary: linear-gradient(90deg, #632ee3, #9f62f2);
-  --gradient-hover: linear-gradient(90deg, #9f62f2, #632ee3);
 }
 
 /* --- OVERRIDES --- */
@@ -35,6 +34,9 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+.bg-primary {
+  background: var(--gradient-primary);
 }
 
 li > a.active {

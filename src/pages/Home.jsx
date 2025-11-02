@@ -1,9 +1,12 @@
 import React from "react";
+import Hero from "../components/Hero";
+import RecentProducts from "../components/RecentProducts";
 
 const Home = () => {
   return (
     <div>
-      <h2>This is home</h2>
+      <Hero />
+      <RecentProducts />
     </div>
   );
 };
