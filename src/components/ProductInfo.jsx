@@ -20,6 +20,7 @@ const ProductInfo = ({ product }) => {
   const { user } = use(AuthContext);
   const [showBidBtn, setShowBidBtn] = useState(false);
   const bidModalRef = useRef(null);
+  // console.log(product);
 
   const handleBidSubmit = (e) => {
     e.preventDefault();
@@ -27,7 +28,29 @@ const ProductInfo = ({ product }) => {
     const email = e.target.email.value;
     const bid = e.target.bid.value;
     const contact = e.target.contact.value;
-    console.log(name, email, bid, contact);
+    const productId = product._id;
+
+    const newBid = {
+      product: productId,
+      buyer_name: name,
+      buyer_image: user.photoURL,
+      buyer_contact: contact,
+      buyer_email: email,
+      bid_price: parseInt(bid),
+      status: "pending",
+    };
+
+    fetch("http://localhost:3000/bids", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newBid),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+
+    e.target.reset();
   };
 
   if (!product) return <div>Loading...</div>; // Simple loading state
@@ -183,7 +206,6 @@ const ProductInfo = ({ product }) => {
                   Product To Wishlist
                 </button>
                 {/* Open the modal using document.getElementById('ID').showModal() method */}
-                <button className="btn">open modal</button>
                 <dialog
                   ref={bidModalRef}
                   className="modal modal-bottom sm:modal-middle"
