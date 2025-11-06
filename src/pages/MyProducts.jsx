@@ -31,78 +31,103 @@ const MyProducts = () => {
   };
 
   return (
-    <div className="overflow-x-auto py-5">
-      <table className="table">
-        {/* head */}
-        <thead>
-          <tr>
-            <th>SL No</th>
-            <th>Image</th>
-            <th>Product Name</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* row 1 */}
-
-          {userProducts.map((product, index) => (
-            <tr key={product._id}>
-              <td className="font-semibold">{index + 1}</td>
-              <td>
-                <div className="flex items-center gap-3">
-                  <div className="avatar">
-                    <div className="mask rounded-2xl h-12 w-12">
-                      <img
-                        // src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                        src={product.image}
-                        alt="Avatar Tailwind CSS Component"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div>
-                  <div className="font-bold">{product.title}</div>
-                  <div className="text-sm opacity-50">{product.location}</div>
-                </div>
-              </td>
-              <td>
-                <span className="badge badge-ghost badge-sm">
-                  {product.category}
-                </span>
-              </td>
-              <td>
-                ${product.price_min} - {product.price_max}
-              </td>
-              <td>{product.status}</td>
-              <th>
-                <div className="flex items-center flex-wrap gap-2">
-                  <Link
-                    to={`/product-details/${product._id}`}
-                    className="btn btn-ghost btn-xs  bg-yellow-200 rounded-full"
+    <>
+      {userProducts.length === 0 ? (
+        <div className="container mx-auto min-h-[60vh] flex flex-col items-center justify-center gap-5">
+          <h2 className="font-bold text-2xl text-primary">
+            Please Create Your Product
+          </h2>
+          <Link to="/add-a-product" className="btn btn-primary">
+            Create a Product
+          </Link>
+        </div>
+      ) : (
+        <div className="container mx-auto mt-8">
+          <h2 className="font-bold text-4xl">
+            Your Products : {userProducts.length}
+          </h2>
+          <div className="overflow-x-auto py-5">
+            <table className="table w-full min-w-[700px] sm:min-w-full">
+              {/* head */}
+              <thead>
+                <tr className="bg-base-200">
+                  <th className="text-xs sm:text-sm">SL No</th>
+                  <th className="text-xs sm:text-sm">Image</th>
+                  <th className="text-xs sm:text-sm">Product Name</th>
+                  <th className="text-xs sm:text-sm">Category</th>
+                  <th className="text-xs sm:text-sm">Price</th>
+                  <th className="text-xs sm:text-sm">Status</th>
+                  <th className="text-xs sm:text-sm">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {userProducts.map((product, index) => (
+                  <tr
+                    key={product._id}
+                    className="hover:bg-base-200 transition-all duration-200"
                   >
-                    Edit
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(product._id)}
-                    className="btn btn-ghost btn-xs bg-red-200 rounded-full"
-                  >
-                    Delete
-                  </button>
-                  <button className="btn btn-ghost btn-xs bg-green-200 rounded-full">
-                    Make Sold
-                  </button>
-                </div>
-              </th>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+                    <td className="font-semibold text-sm sm:text-base">
+                      {index + 1}
+                    </td>
+                    <td>
+                      <div className="flex items-center justify-center sm:justify-start">
+                        <div className="avatar">
+                          <div className="mask rounded-xl h-10 w-10 sm:h-12 sm:w-12">
+                            <img
+                              src={product.image}
+                              alt="Product"
+                              className="object-cover"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <div className="font-bold text-sm sm:text-base">
+                          {product.title}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {product.location}
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span className="badge badge-ghost badge-sm">
+                        {product.category}
+                      </span>
+                    </td>
+                    <td className="text-sm">
+                      ${product.price_min} - {product.price_max}
+                    </td>
+                    <td className="text-sm">{product.status}</td>
+                    <td>
+                      <div className="flex flex-wrap sm:flex-nowrap gap-2 justify-center sm:justify-start">
+                        <Link
+                          to={`/product-details/${product._id}`}
+                          className="btn btn-ghost btn-xs bg-yellow-200 rounded-full"
+                        >
+                          Edit
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(product._id)}
+                          className="btn btn-ghost btn-xs bg-red-200 rounded-full"
+                        >
+                          Delete
+                        </button>
+                        <button className="btn btn-ghost btn-xs bg-green-200 rounded-full">
+                          Make Sold
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

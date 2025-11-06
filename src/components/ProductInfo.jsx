@@ -1,4 +1,4 @@
-import React, { use, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { FaArrowLeft, FaUser } from "react-icons/fa";
 import { Link } from "react-router";
 import AuthContext from "../Authentication/AuthContext";
@@ -19,8 +19,18 @@ const getStatusClasses = (status) => {
 const ProductInfo = ({ product }) => {
   const { user } = use(AuthContext);
   const [showBidBtn, setShowBidBtn] = useState(false);
+  const [productBids, setProductBids] = useState([]);
   const bidModalRef = useRef(null);
   // console.log(product);
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/product/bids/${product._id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setProductBids(data);
+      });
+  }, [product]);
 
   const handleBidSubmit = (e) => {
     e.preventDefault();
@@ -48,7 +58,12 @@ const ProductInfo = ({ product }) => {
       body: JSON.stringify(newBid),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          alert("Your bid has been placed");
+        }
+      });
 
     e.target.reset();
   };
@@ -303,6 +318,87 @@ const ProductInfo = ({ product }) => {
           </div>
         </div>
       </div>
+
+      {product.email === user.email ? (
+        <div className="mt-8">
+          <h2 className="font-bold text-4xl">
+            Bids For This Product : {productBids.length}
+          </h2>
+          <div className="overflow-x-auto py-5">
+            <table className="table">
+              {/* head */}
+              <thead>
+                <tr>
+                  <th>SL No</th>
+                  <th>Product</th>
+                  <th>Seller</th>
+                  <th>Bid Price</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* row 1 */}
+
+                {productBids.map((bid, index) => (
+                  <tr key={bid._id}>
+                    <td className="font-semibold">{index + 1}</td>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="mask rounded-2xl h-12 w-12">
+                            <img
+                              src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                              // src={product.image}
+                              alt="Avatar Tailwind CSS Component"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <h3>{product.title}</h3>
+                          <p>${product.price_min}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="mask rounded-2xl h-12 w-12">
+                            <img
+                              // src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                              src={bid.buyer_image}
+                              alt="Avatar Tailwind CSS Component"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <h3>{bid.buyer_name}</h3>
+                          <p>{bid.buyer_email}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="font-bold">${bid.bid_price}</div>
+                    </td>
+
+                    <th>
+                      <div className="flex items-center flex-wrap gap-2">
+                        <button className="btn btn-outline btn-xs border-green-400 text-green-700 rounded-md">
+                          Accept Offer
+                        </button>
+                        <button className="btn btn-outline btn-xs border-red-400 text-red-600 rounded-md">
+                          Reject Offer
+                        </button>
+                      </div>
+                    </th>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </main>
   );
 };

@@ -47,6 +47,7 @@ const router = createBrowserRouter([
             <MyBids />
           </PrivateRoute>
         ),
+        loader: () => fetch("http://localhost:3000/all-products"),
       },
       {
         path: "/add-a-product",

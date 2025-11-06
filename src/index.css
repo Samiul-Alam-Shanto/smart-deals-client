@@ -15,6 +15,7 @@
 
   /* Gradient variable */
   --gradient-primary: linear-gradient(90deg, #632ee3, #9f62f2);
+  --gradient-hover: linear-gradient(0deg, #632ee3, #9f62f2);
 }
 
 /* --- OVERRIDES --- */
