@@ -286,7 +286,9 @@ const Footer = () => {
         <div className=" px-5 sm:px-10 lg:px-20 py-6 lg:py-8 flex flex-col lg:flex-row justify-between items-center gap-6 border-t border-white/10">
           <div className="flex items-center gap-3">
             <FaLeaf className="text-[#7fb069]" size={30} />
-            <span className="text-2xl sm:text-3xl font-medium">GreenNest</span>
+            <span className="text-2xl sm:text-3xl font-medium">
+              Smart Deals
+            </span>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
